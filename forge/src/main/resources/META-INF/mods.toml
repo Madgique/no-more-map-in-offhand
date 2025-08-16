@@ -1,0 +1,38 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="Not specified"
+
+[[mods]]
+modId="map_curios_slot"
+version="${version}"
+displayName="Map Curios Slot"
+displayURL="https://www.curseforge.com/members/madgique/projects"
+authors="Madgique"
+description='''Map Curios Slot mod'''
+logoFile = "icon.png"
+
+# Start of user code block mod configuration
+# End of user code block mod configuration
+
+[[dependencies.map_curios_slot]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1]"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.map_curios_slot]]
+    modId="architectury"
+    mandatory=true
+    versionRange="[9.2.14,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.map_curios_slot]]
+    modId="curios"
+    mandatory=true
+    versionRange="[5.9.0,)"
+    ordering="NONE"
+    side="BOTH"
+
+

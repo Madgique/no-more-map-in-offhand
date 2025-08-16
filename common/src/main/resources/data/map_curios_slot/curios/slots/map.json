@@ -1,0 +1,7 @@
+{
+  "order": 100,
+  "size": 1,
+  "add_cosmetic": false,
+  "drop_rule": "DEFAULT",
+  "validators": ["curios:tag"]
+}

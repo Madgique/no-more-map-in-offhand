@@ -1,0 +1,19 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true,
+    },
+    "java.import.gradle.java.home": "E:\\Logiciels\\Java\\jdk19",
+    "java.configuration.updateBuildConfiguration": "disabled",
+  }
+}
