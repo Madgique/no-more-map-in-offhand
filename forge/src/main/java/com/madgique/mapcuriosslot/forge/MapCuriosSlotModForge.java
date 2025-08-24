@@ -1,8 +1,6 @@
 package com.madgique.mapcuriosslot.forge;
 
-import com.madgique.mapcuriosslot.MapCuriosSlotClient;
 import com.madgique.mapcuriosslot.MapCuriosSlotMod;
-
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
@@ -18,13 +16,14 @@ public class MapCuriosSlotModForge {
     EventBuses.registerModEventBus(MapCuriosSlotMod.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
     FMLJavaModLoadingContext.get().getModEventBus().register(this);
     MapCuriosSlotMod.init();
-    
-    // Initialize network
-    NetworkManager.init();
-    
-    // set the mod client only
-    DistExecutor.safeCallWhenOn(Dist.CLIENT, () -> MapCuriosSlotClient::new);
+
+    // Initialize client-side features
     DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> MapCuriosSlotClientForge::init);
+    
+    // Register config screen for Forge (prevents grayed out config button)
+    DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClothConfigForge::registerModsPage);
+    
+    // Key bindings are registered from MapCuriosSlotClientForge.init() instead
   }
 
 }

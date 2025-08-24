@@ -7,6 +7,10 @@ dependencies {
     
     // Curios dependency
     modCompileOnly "top.theillusivec4.curios:curios-forge:${rootProject.curios_version}:api"
+    
+    // ClothConfig for configuration GUI (includes AutoConfig)
+    modApi "me.shedaniel.cloth:cloth-config:${rootProject.cloth_config_version}"
+    
 }
 
 architectury {
