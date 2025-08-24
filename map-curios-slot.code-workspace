@@ -15,5 +15,10 @@
     },
     "java.import.gradle.java.home": "E:\\Logiciels\\Java\\jdk19",
     "java.configuration.updateBuildConfiguration": "disabled",
+    "github.copilot.chat.commitMessageGeneration.instructions": [
+      {
+        "text": "Generate commit messages in English."
+      }
+    ]
   }
 }

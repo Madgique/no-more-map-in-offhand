@@ -1,9 +1,10 @@
-package com.madgique.mapcuriosslot.forge;
+package com.madgique.mapcuriosslot.forge.client;
 
 import com.madgique.mapcuriosslot.MapCuriosSlotMod;
 import top.theillusivec4.curios.api.CuriosApi;
 
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
@@ -11,29 +12,30 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = MapCuriosSlotMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class MapTickHandler {
+@Mod.EventBusSubscriber(modid = MapCuriosSlotMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = net.minecraftforge.api.distmarker.Dist.CLIENT)
+public class ClientMapTickHandler {
 
     private static int tickCounter = 0;
 
     @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+    public static void onClientTick(TickEvent.ClientTickEvent event) {
         // Phase END uniquement
         if (event.phase != TickEvent.Phase.END) {
             return;
         }
 
-        // Côté serveur uniquement
-        if (!(event.player instanceof ServerPlayer player)) {
+        Minecraft minecraft = Minecraft.getInstance();
+        LocalPlayer player = minecraft.player;
+        
+        if (player == null || minecraft.level == null) {
             return;
         }
 
-        // Mise à jour à chaque tick pour une minimap très fluide
-        // (Note: peut être plus lourd sur les performances, mais plus réactif)
-        // tickCounter++;
-        // if (tickCounter % 1 != 0) {
-        //     return;
-        // }
+        // Optimisation: ne vérifier que toutes les 10 ticks (0.5 secondes)
+        tickCounter++;
+        if (tickCounter % 10 != 0) {
+            return;
+        }
 
         // Vérifier si le joueur a une map dans un slot Curios
         CuriosApi.getCuriosInventory(player).ifPresent(curiosInventory -> {
@@ -44,14 +46,14 @@ public class MapTickHandler {
                     
                     // Vérifier si c'est une map
                     if (!stack.isEmpty() && stack.getItem() instanceof MapItem) {
-                        processMapStack(player, stack);
+                        processMapStackClient(player, stack);
                     }
                 }
             });
         });
     }
 
-    private static void processMapStack(ServerPlayer player, ItemStack stack) {
+    private static void processMapStackClient(LocalPlayer player, ItemStack stack) {
         // Récupérer le mapId
         Integer mapId = MapItem.getMapId(stack);
         if (mapId == null) return;
@@ -60,26 +62,16 @@ public class MapTickHandler {
         MapItemSavedData data = MapItem.getSavedData(mapId, player.level());
         if (data == null) return;
 
-        // ÉTAPE 1: Vérifier si le joueur est dans la bonne dimension pour cette map
+        // Vérifier si le joueur est dans la bonne dimension pour cette map
         if (data.dimension != player.level().dimension()) {
             return; // Le joueur n'est pas dans la dimension de cette map
         }
 
-        // ÉTAPE 2: Utiliser l'instance de MapItem pour mettre à jour la carte
+        // Force update on client side
         MapItem mapItem = (MapItem) stack.getItem();
         mapItem.update(player.level(), player, data);
         
-        // ÉTAPE 3: Appeler tickCarriedBy pour créer le curseur du joueur
-        // Cette méthode crée automatiquement la MapDecoration PLAYER basée sur la position du joueur
+        // Update player position on the map
         data.tickCarriedBy(player, stack);
-        
-        // ÉTAPE 4: Force dirty et send packet au client
-        data.setDirty();
-        
-        // Force send update packet to client
-        var packet = data.getUpdatePacket(mapId, player);
-        if (packet != null) {
-            player.connection.send(packet);
-        }
     }
 }

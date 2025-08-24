@@ -42,6 +42,8 @@ public class MinimapRenderer {
                         return;
                 }
 
+                // Note: Map updates are handled by ClientMapTickHandler
+
                 // Use config values
                 int minimapX = config.getMinimapX();
                 int minimapY = config.getMinimapY();
