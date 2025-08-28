@@ -3,32 +3,32 @@ loaderVersion="[47,)"
 license="Not specified"
 
 [[mods]]
-modId="map_curios_slot"
+modId="no_more_map_in_offhand"
 version="${version}"
-displayName="Map Curios Slot"
+displayName="No More Map in Offhand"
 displayURL="https://www.curseforge.com/members/madgique/projects"
 authors="Madgique"
-description='''Map Curios Slot mod'''
+description='''No More Map in Offhand - Display maps from accessory slots without holding them'''
 logoFile = "icon.png"
 
 # Start of user code block mod configuration
 # End of user code block mod configuration
 
-[[dependencies.map_curios_slot]]
+[[dependencies.no_more_map_in_offhand]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.20.1]"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.map_curios_slot]]
+[[dependencies.no_more_map_in_offhand]]
     modId="architectury"
     mandatory=true
     versionRange="[9.2.14,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.map_curios_slot]]
+[[dependencies.no_more_map_in_offhand]]
     modId="curios"
     mandatory=true
     versionRange="[5.9.0,)"

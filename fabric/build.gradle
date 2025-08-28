@@ -7,6 +7,10 @@ repositories {
         name "Modmaven"
         url "https://modmaven.dev/"
     }
+    maven {
+        name "Wisp Forest"
+        url "https://maven.wispforest.io/"
+    }
 }
 
 configurations {
@@ -23,6 +27,9 @@ dependencies {
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
     // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
+    
+    // Accessories API for Fabric
+    modApi "io.wispforest:accessories-fabric:1.0.0-beta.47+1.20.1"
 
 
     implementation(project(path: ":common", configuration: "dev")) {

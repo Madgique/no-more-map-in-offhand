@@ -2,12 +2,12 @@
   "permissions": {
     "allow": [
       "Bash(mkdir:*)",
-      "Bash(rmdir:*)",
-      "Bash(rm:*)",
       "Bash(mv:*)",
       "Bash(./gradlew:*)"
     ],
     "deny": [],
-    "ask": []
+    "ask": [
+      "Bash(rm:*)"
+    ]
   }
 }
